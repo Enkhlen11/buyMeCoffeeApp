@@ -10,13 +10,17 @@ import {
 
 export const Header = () => {
   return (
-    <div className="w-full h-[50px] bg-[gray] ">
-      <div className="w-full h-[50px] bg-[gray] flex gap-3 font-bold items-center">
+    <div className="w-full h-[70px] bg-[gray] flex px-[40px]">
+      <div className="w-full  flex gap-3 font-bold items-center">
         <Coffee />
-        Buy Me Coffee
+        <p>Buy Me Coffee</p>
       </div>
+      <div className="flex items-center gap-20">
+        <div className="flex items-center gap-3">
+          <div className="w-[50px] h-[50px] bg-[green] rounded-full"></div>
+          <p>Enke</p>
+        </div>
 
-      <div>
         <DropdownMenu>
           <DropdownMenuTrigger>
             <ChevronDown />
