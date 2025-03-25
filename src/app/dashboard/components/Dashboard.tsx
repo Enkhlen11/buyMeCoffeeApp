@@ -1,13 +1,16 @@
 import { Button } from "@/components/ui/button";
+import { ExternalLinkIcon } from "lucide-react";
 
 export default function Dashboard() {
   return (
-    <div className="w-[100%] bg-[#e6afaf] mt-[30px]">
+    <div className="w-[100%]  mt-[30px]">
       <div className="flex flex-col items-start">
-        <Button variant={"ghost"}>Home</Button>
-        <Button variant={"ghost"}>Explore</Button>
-        <Button variant={"ghost"}>View page</Button>
-        <Button variant={"ghost"}>Account settings</Button>
+        <Button variant={"default"}>Home</Button>
+        <Button variant={"outline"}>Explore</Button>
+        <Button variant={"secondary"}>
+          View page <ExternalLinkIcon />
+        </Button>
+        <Button>Account settings</Button>
       </div>
       <div></div>
     </div>
