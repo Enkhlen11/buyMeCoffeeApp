@@ -42,28 +42,28 @@ export const Donation = ({ amounts }: { amounts: number[] }) => {
     console.log(values);
   }
   return (
-    <div className="">
-      <div className="h-[300px] w-[100%] flex justify-center items-center">
+    <div className="w-full h-full">
+      <div className="h-[300px] w-full flex justify-center items-center relative bg-gray-300">
         <Button>
           <Camera /> Add a cover image
         </Button>
       </div>
-      <div className="flex justify-cente gap-[60px] justify-around">
-        <div>
-          <div>
-            <div className="w-[630px] h-[233px] ">
+      <div className="flex w-full justify-center gap-[60px]  px-[80px] absolute mt-[-80px]">
+        <div className="w-[630px]">
+          <div className="flex flex-col gap-6">
+            <div className=" h-[233px] border-[1px]">
               <div className="w-[30px] h-[30px] rounded-full bg-[gray]"></div>
               <Button>Edit page</Button>
               <p>Enke</p>
             </div>
-            <div className="border-t">
+            <div className="border-1">
               <p>About Jake</p>
               <p>
                 I'm a typical person who enjoys exploring diffrent things. I
                 also make music art as a hobby. Follow me along.
               </p>
             </div>
-            <div className="h-[116px]">
+            <div className="h-[116px] border-1">
               <p>Social media URL</p>
               <p>http://buyymeacoffee.com/speecerulz44</p>
             </div>
@@ -78,7 +78,7 @@ export const Donation = ({ amounts }: { amounts: number[] }) => {
             </div>
           </div>
         </div>
-        <div className="w-[628px] h-[509px] flex flex-col gap-[20px]">
+        <div className="w-[628px] h-[509px] flex flex-col gap-[20px] border-[1px] p-[40px]">
           <p>Buy Jake a Coffee</p>
           <ToggleGroup className="flex flex-col gap-2" type="single">
             <p>Select amount:</p>
@@ -129,7 +129,9 @@ export const Donation = ({ amounts }: { amounts: number[] }) => {
                   </FormItem>
                 )}
               />
-              <Button type="submit">Support</Button>
+              <Button className="w-full" type="submit">
+                Support
+              </Button>
             </form>
           </Form>
         </div>

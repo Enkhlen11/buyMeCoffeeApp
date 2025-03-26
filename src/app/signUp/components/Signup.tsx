@@ -21,15 +21,14 @@ const formSchema = z.object({
   email: z
     .string()
     .email("Invailed email. Use a format like example@email.com"),
-  password: z.string().min(2).max(50),
+  username: z.string().min(2).max(50),
 });
-export const LogIn = () => {
+export const SignUp = () => {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      username: "",
     },
   });
 
@@ -56,11 +55,11 @@ export const LogIn = () => {
       </div>
       <div className="w-[50%] justify-center items-center">
         <div className="flex justify-end">
-          <Button>Sign up</Button>
+          <Button>Log in</Button>
         </div>
         <div className=" w-full h-full  text-[24px] font-bold  flex flex-col gap-10 justify-center items-center">
-          <div className="w-[407px]">
-            <p>Welcome back</p>
+          <div className="w-[407px] ">
+            <p>Create Your Account</p>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -68,28 +67,16 @@ export const LogIn = () => {
               >
                 <FormField
                   control={form.control}
-                  name="email"
+                  name="username"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
+                    <FormItem className="flex flex-col gap-6">
+                      <FormDescription>
+                        Choose a username for your page
+                      </FormDescription>
+                      <FormLabel>Username</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter email here" {...field} />
+                        <Input placeholder="Enter username here" {...field} />
                       </FormControl>
-
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter password here" {...field} />
-                      </FormControl>
-
                       <FormMessage />
                     </FormItem>
                   )}
