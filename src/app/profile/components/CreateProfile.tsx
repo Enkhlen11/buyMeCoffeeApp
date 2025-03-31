@@ -15,13 +15,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
 const formSchema = z.object({
   name: z.string().nonempty({ message: "Please enter name" }),
-  about:z.string().nonempty({message:"Please enter info about yourself"}),
-  social:z.string().min(2,{message:"Please enter a social link"})
+  about: z.string().nonempty({ message: "Please enter info about yourself" }),
+  social: z.string().min(2, { message: "Please enter a social link" }),
 });
 export const CreateProfile = () => {
+  const [profileImageFile, setProffileImageFile] = useState<File | null>(null);
+  const [previewURL, setPreviewURL] = useState<string | null>(null);
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -54,11 +57,15 @@ export const CreateProfile = () => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Add photo</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter your name here" {...field} />
+                    <Input
+                      type="file"
+                      className="w-40 h-40 rounded-full border-[2px]"
+                      {...field}
+                    />
                   </FormControl>
-             
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -75,7 +82,7 @@ export const CreateProfile = () => {
                       {...field}
                     />
                   </FormControl>
-                
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -89,7 +96,7 @@ export const CreateProfile = () => {
                   <FormControl>
                     <Input placeholder="https://" {...field} />
                   </FormControl>
-              
+
                   <FormMessage />
                 </FormItem>
               )}
