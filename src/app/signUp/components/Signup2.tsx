@@ -16,17 +16,20 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Dispatch, SetStateAction } from "react";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
-  username: z.string().min(2).max(50),
+  email: z
+    .string()
+    .email("Invailed email. Use a format like example@email.com"),
+  password: z.string().min(2).max(50),
 });
-export const SignUp = ({
-  setUserName,
+export const SignUp2 = ({
+  username,
   setCurrentSlide,
   currentSlide,
 }: {
-  setUserName: Dispatch<SetStateAction<string>>;
+  username: string;
   setCurrentSlide: () => void;
   currentSlide: number;
 }) => {
@@ -34,15 +37,15 @@ export const SignUp = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      email: "",
+      password: "",
     },
   });
-
+  const router = useRouter();
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    setUserName(values.username);
-    setCurrentSlide();
     console.log(values);
+    router.push("/login");
   }
   return (
     <div className="w-screen h-screen flex">
@@ -65,7 +68,7 @@ export const SignUp = ({
         </div>
         <div className=" w-full h-full  text-[24px] font-bold  flex flex-col gap-10 justify-center items-center">
           <div className="w-[407px] ">
-            <p>Create Your Account</p>
+            <p>Welcome, {username}</p>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -73,15 +76,28 @@ export const SignUp = ({
               >
                 <FormField
                   control={form.control}
-                  name="username"
+                  name="email"
                   render={({ field }) => (
                     <FormItem className="flex flex-col gap-6">
                       <FormDescription>
-                        Choose a username for your page
+                        Connect email and set a password
                       </FormDescription>
-                      <FormLabel>Username</FormLabel>
+                      <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter username here" {...field} />
+                        <Input placeholder="Enter email here" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col gap-6">
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter password here" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
