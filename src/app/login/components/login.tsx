@@ -61,6 +61,7 @@ export const LogIn = () => {
     loginProfile();
     console.log(values);
   }
+
   return (
     <div className="w-screen h-screen flex">
       <div className="w-[50%] h-full bg-[#FBBF24] ">
@@ -78,7 +79,7 @@ export const LogIn = () => {
       </div>
       <div className="w-[50%] justify-center items-center">
         <div className="flex justify-end">
-          <Button>Sign up</Button>
+          <Button variant={"secondary"} onClick={()=>router.push("/signup")}>Sign up</Button>
         </div>
         <div className=" w-full h-full  text-[24px] font-bold  flex flex-col gap-10 justify-center items-center">
           <div className="w-[407px]">
@@ -116,7 +117,7 @@ export const LogIn = () => {
                     </FormItem>
                   )}
                 />
-                
+
                 <Button
                   className="w-full"
                   type="submit"
