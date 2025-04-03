@@ -31,7 +31,7 @@ export const SignUp = ({
   setCurrentSlide: () => void;
   currentSlide: number;
 }) => {
-  const router=useRouter()
+  const router = useRouter();
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,7 +49,7 @@ export const SignUp = ({
   return (
     <div className="w-screen h-screen flex">
       <div className="w-[50%] h-full bg-[#FBBF24] ">
-        <div className=" flex gap-3 font-bold ">
+        <div className=" flex gap-3 font-bold pl-15 pt-10">
           <Coffee />
           <p>Buy Me Coffee</p>
         </div>
@@ -62,8 +62,10 @@ export const SignUp = ({
         </div>
       </div>
       <div className="w-[50%] justify-center items-center">
-        <div className="flex justify-end">
-          <Button variant={"secondary"} onClick={()=>router.push("/login")}>Log in</Button>
+        <div className="flex justify-end pr-15 pt-10">
+          <Button variant={"secondary"} onClick={() => router.push("/login")}>
+            Log in
+          </Button>
         </div>
         <div className=" w-full h-full  text-[24px] font-bold  flex flex-col gap-10 justify-center items-center">
           <div className="w-[407px] ">
