@@ -45,7 +45,21 @@ export const SignUp2 = ({
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    router.push("/login");
+    const createProfile = async () => {
+      const data = await fetch("api/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: values.email,
+          username,
+          password: values.password,
+        }),
+      });
+      router.push("/login");
+    };
+    createProfile();
   }
   return (
     <div className="w-screen h-screen flex">

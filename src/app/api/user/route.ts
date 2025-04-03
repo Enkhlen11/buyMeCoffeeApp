@@ -11,7 +11,9 @@ export async function POST(req: Request) {
     const users = await runQuery(createTable, [email, username, password]);
 
     return new NextResponse(JSON.stringify({ users }));
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
   // const user = await getUser();
   // return new Response(JSON.stringify({ data: user }));
 }

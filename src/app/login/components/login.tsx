@@ -16,6 +16,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
+
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   email: z
@@ -32,11 +36,29 @@ export const LogIn = () => {
       password: "",
     },
   });
-
+  const router = useRouter();
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const loginProfile = async () => {
+      const res = await fetch("api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: values.email,
+
+          password: values.password,
+        }),
+      });
+      const data = await res.json();
+      if (data.user) {
+        router.push("/profile");
+      }
+      console.log(data);
+    };
+
+    loginProfile();
     console.log(values);
   }
   return (
@@ -94,7 +116,12 @@ export const LogIn = () => {
                     </FormItem>
                   )}
                 />
-                <Button className="w-full" type="submit">
+                
+                <Button
+                  className="w-full"
+                  type="submit"
+                  onClick={() => toast("password buruu baina")}
+                >
                   Continue
                 </Button>
               </form>
