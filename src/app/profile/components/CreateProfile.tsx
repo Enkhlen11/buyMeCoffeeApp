@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Camera, CameraIcon, Coffee } from "lucide-react";
+import { Camera, CameraIcon, Coffee, X } from "lucide-react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -17,31 +17,63 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { imageUpload } from "@/util/imageUpload";
 
 const formSchema = z.object({
-  addPhoto: z.string().nonempty({ message: "Please enter image" }),
-  name: z.string().nonempty({ message: "Please enter name" }),
-  about: z.string().nonempty({ message: "Please enter info about yourself" }),
-  social: z.string().url({ message: "Please enter a social link" }),
+  addPhoto: z
+    .string({ message: "Please enter image" })
+    .nonempty({ message: "Please enter image" }),
+  name: z
+    .string({ message: "Please enter name" })
+    .nonempty({ message: "Please enter name" }),
+  about: z
+    .string({ message: "Please enter info about yourself" })
+    .nonempty({ message: "Please enter info about yourself" }),
+  social: z
+    .string({ message: "Please enter a social link" })
+    .url({ message: "Please enter a social link" }),
 });
 export const CreateProfile = () => {
   const [profileImageFile, setProffileImageFile] = useState<File | null>(null);
   const [previewURL, setPreviewURL] = useState<string | null>(null);
+  const router = useRouter();
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      addPhoto: "",
       name: "",
+      about: "",
+      social: "",
     },
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const imageURL = await imageUpload(profileImageFile);
+
+    
+
+    router.push(`/profile`);
     console.log(values);
   }
-  const router = useRouter();
+
+  const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) {
+      return alert("Та зургаа сонгоно уу?");
+    }
+    const imageUrl = URL.createObjectURL(e.target.files[0]);
+    form.setValue("addPhoto", imageUrl);
+    setPreviewURL(imageUrl);
+    setProffileImageFile(e.target.files[0]);
+  };
+
+  const deleteHandler = () => {
+    return setPreviewURL(null);
+    setProffileImageFile(null);
+  };
   return (
     <div className="">
       <div className="flex justify-between">
@@ -50,7 +82,7 @@ export const CreateProfile = () => {
           <p>Buy Me Coffee</p>
         </div>
         <div className="flex justify-end pr-15 pt-10">
-          <Button variant={"secondary"} onClick={() => router.push("/signup")}>
+          <Button variant={"secondary"} onClick={() => router.push("/login")}>
             Log out
           </Button>
         </div>
@@ -68,15 +100,52 @@ export const CreateProfile = () => {
                   <FormItem className="relative">
                     <FormLabel>Add photo</FormLabel>
                     <FormControl>
-                      <Input
-                        type="file"
-                        className="w-40 h-40 rounded-full border-[2px]"
-                        {...field}
-                      />
+                      <div className="rounded-full border-2 border-dashed w-[160px] h-[160px] flex justify-center items-center overflow-hidden">
+                        {previewURL ? (
+                          <div className="flex justify-center items-center">
+                            <Image
+                              alt=""
+                              src={previewURL}
+                              width={160}
+                              height={160}
+                            ></Image>
+                            <Button
+                              className="absolute bg-white rounded-full w-[30px] h-[30px]"
+                              onClick={deleteHandler}
+                            >
+                              <X className="absolute" color="red" />
+                            </Button>
+                          </div>
+                        ) : (
+                          <div className="flex justify-center items-center">
+                            <Input
+                              type="file"
+                              {...field}
+                              className="rounded-full w-full h-full border-0 opacity-0 z-200"
+                              onChange={inputHandler}
+                            />
+                            <Camera className="absolute opacity-30" />
+                          </div>
+                        )}
+                      </div>
                     </FormControl>
-                    <div className="absolute my-[85px] ml-[65px]">
+                    {/* <div className="absolute my-[85px] ml-[65px]">
                       <CameraIcon className="text-[gray]" />
-                    </div>
+                    </div> */}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your name here" {...field} />
+                    </FormControl>
+
                     <FormMessage />
                   </FormItem>
                 )}
