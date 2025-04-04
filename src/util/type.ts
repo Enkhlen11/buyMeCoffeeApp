@@ -6,3 +6,11 @@ export type UserType = {
   // profile:String
   // updatedAt:Date
 };
+export type UserProfileType = {
+  name: string;
+  about: string;
+  avatarImage: string;
+  socialMediaUrl: string;
+  backgroundImage: string;
+  successMessage: string;
+};

@@ -54,8 +54,6 @@ export const CreateProfile = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const imageURL = await imageUpload(profileImageFile);
 
-    
-
     router.push(`/profile`);
     console.log(values);
   }
