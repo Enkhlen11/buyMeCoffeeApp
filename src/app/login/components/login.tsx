@@ -52,8 +52,12 @@ export const LogIn = () => {
         }),
       });
       const data = await res.json();
+      console.log(data);
+
       if (data.user) {
         router.push("/profile");
+      } else {
+        router.push("signup");
       }
       console.log(data);
     };

@@ -13,24 +13,26 @@ export async function POST(req: Request): Promise<NextResponse> {
     const getUserQuery = `SELECT username, password, email FROM "User" WHERE email=$1;`;
     const values = [email];
 
-    const user: user[] = await runQuery(getUserQuery, values);
+    const users: user[] = await runQuery(getUserQuery, values);
 
-    if (user.length === 0) {
+    if (users.length === 0) {
       return new NextResponse(JSON.stringify({ error: "user not found" }), {
         status: 404,
       });
     }
 
-    const isValid = user[0].password === password;
+    const isValid = users[0].password === password;
 
     if (!isValid) {
       return new NextResponse(JSON.stringify({ error: "password buruu bn" }), {
         status: 404,
       });
     }
+    const getProfileQuery=``
+    const profiles: user[] = await runQuery(getProfileQuery, values);
 
     return new NextResponse(
-      JSON.stringify({ user, message: "amjilttai nevterlee" }),
+      JSON.stringify({ user, message: "amjilttai nevterlee", profile:true }),
       { status: 200 }
     );
   } catch (err) {
