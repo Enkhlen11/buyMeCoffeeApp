@@ -69,7 +69,8 @@ export const CreateProfile = () => {
   };
 
   const deleteHandler = () => {
-    return setPreviewURL(null);
+    form.setValue("addPhoto", "");
+    setPreviewURL("");
     setProffileImageFile(null);
   };
   return (
@@ -108,6 +109,7 @@ export const CreateProfile = () => {
                               height={160}
                             ></Image>
                             <Button
+                              type="button"
                               className="absolute bg-white rounded-full w-[30px] h-[30px]"
                               onClick={deleteHandler}
                             >
