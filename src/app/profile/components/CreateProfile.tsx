@@ -53,7 +53,21 @@ export const CreateProfile = () => {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const imageURL = await imageUpload(profileImageFile);
-
+    const createProfile = async () => {
+      const res = await fetch("/api/userProfile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          addPhoto: imageURL,
+          name: values.name,
+          about: values.about,
+          social: values.social,
+        }),
+      });
+      const data = await res.json();
+      console.log("ene", data);
+    };
+    createProfile();
     router.push(`/profile`);
     console.log(values);
   }
@@ -63,6 +77,9 @@ export const CreateProfile = () => {
       return alert("Та зургаа сонгоно уу?");
     }
     const imageUrl = URL.createObjectURL(e.target.files[0]);
+    // const imageUrl =
+    //   "https://res.cloudinary.com/dpy6izfnd/image/upload/v1740025180/ftbb2ckxngy8wvhehrww.jpg";
+
     form.setValue("addPhoto", imageUrl);
     setPreviewURL(imageUrl);
     setProffileImageFile(e.target.files[0]);
@@ -73,6 +90,7 @@ export const CreateProfile = () => {
     setPreviewURL("");
     setProffileImageFile(null);
   };
+
   return (
     <div className="">
       <div className="flex justify-between">

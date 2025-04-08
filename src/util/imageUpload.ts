@@ -1,23 +1,20 @@
-"use client";
+const CLOUDINARY_NAME = process.env.NEXT_PUBLIC_API_KEY_CLOUDINARY_NAME;
+const PRESET = process.env.NEXT_PUBLIC_API_KEY_PRESET_NAME;
 
 export const imageUpload = async (file: File | null) => {
   if (!file) {
     alert("Please select a file");
     return;
   }
-  
 
-  const PRESET_NAME = process.env.PRESET_NAME;
-  const CLOUDINARY_NAME = process.env.CLOUDINARY_NAME;
-  
-  if (!PRESET_NAME || !CLOUDINARY_NAME) {
+  if (!PRESET || !CLOUDINARY_NAME) {
     alert("Missing environment variables");
     return;
-  }  
+  }
 
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("upload_preset", PRESET_NAME);
+  formData.append("upload_preset", PRESET);
 
   try {
     const res = await fetch(

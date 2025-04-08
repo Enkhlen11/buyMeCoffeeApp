@@ -32,7 +32,7 @@ export async function POST(req: Request): Promise<NextResponse> {
     const profiles: user[] = await runQuery(getProfileQuery, values);
 
     return new NextResponse(
-      JSON.stringify({ user, message: "amjilttai nevterlee", profile:true }),
+      JSON.stringify({ users, message: "amjilttai nevterlee", profile:true }),
       { status: 200 }
     );
   } catch (err) {

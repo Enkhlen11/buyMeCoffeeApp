@@ -53,7 +53,7 @@ export const LogIn = () => {
       });
       const data = await res.json();
       console.log(data);
-
+///shalgah
       if (data.user) {
         router.push("/profile");
       } else {
