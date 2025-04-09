@@ -17,10 +17,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
-
-import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
-
+import axios from "axios";
 const formSchema = z.object({
   email: z
     .string()
@@ -40,26 +38,27 @@ export const LogIn = () => {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const loginProfile = async () => {
-      const res = await fetch("api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      try {
+        const res = await axios.post("/api/login", {
           email: values.email,
-
           password: values.password,
-        }),
-      });
-      const data = await res.json();
-      console.log(data);
-///shalgah
-      if (data.user) {
-        router.push("/profile");
-      } else {
-        router.push("signup");
+        });
+        toast.success("amjilttai nevterlee");
+        console.log(res.data, " useriin data");
+        // const res = await fetch("api/login", {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: JSON.stringify({
+        //     email: values.email,
+        //     password: values.password,
+        //   }),
+        // });
+        // const data = await res.json();
+      } catch (error) {
+        toast.error("password buruu baina");
       }
-      console.log(data);
     };
 
     loginProfile();
@@ -124,11 +123,7 @@ export const LogIn = () => {
                   )}
                 />
 
-                <Button
-                  className="w-full"
-                  type="submit"
-                  onClick={() => toast("password buruu baina")}
-                >
+                <Button className="w-full" type="submit">
                   Continue
                 </Button>
               </form>

@@ -10,14 +10,14 @@ type user = {
 export async function POST(req: Request): Promise<NextResponse> {
   try {
     const { email, password } = await req.json();
-    const getUserQuery = `SELECT username, password, email FROM "User" WHERE email=$1;`;
+    const getUserQuery = `SELECT username, password, email, "profileId" FROM "User" WHERE email=$1;`;
     const values = [email];
 
     const users: user[] = await runQuery(getUserQuery, values);
 
     if (users.length === 0) {
       return new NextResponse(JSON.stringify({ error: "user not found" }), {
-        status: 404,
+        status: 401,
       });
     }
 
@@ -28,11 +28,13 @@ export async function POST(req: Request): Promise<NextResponse> {
         status: 404,
       });
     }
-    const getProfileQuery=``
-    const profiles: user[] = await runQuery(getProfileQuery, values);
+
+    // profile tai yu ugui yu gedgiin shalgaad true false utgaa butsaanaa
+
+if (users)
 
     return new NextResponse(
-      JSON.stringify({ users, message: "amjilttai nevterlee", profile:true }),
+      JSON.stringify({ users, message: "amjilttai nevterlee", profile: true }),
       { status: 200 }
     );
   } catch (err) {
