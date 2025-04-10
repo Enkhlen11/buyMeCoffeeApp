@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import axios from "axios";
+import { useState } from "react";
 const formSchema = z.object({
   email: z
     .string()
@@ -26,6 +27,7 @@ const formSchema = z.object({
   password: z.string().min(2).max(50),
 });
 export const LogIn = () => {
+  const [user, setUser] = useState()
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -45,6 +47,7 @@ export const LogIn = () => {
         });
         toast.success("amjilttai nevterlee");
         console.log(res.data, " useriin data");
+        setUser(res.data.users[0])
         // const res = await fetch("api/login", {
         //   method: "POST",
         //   headers: {
@@ -56,6 +59,11 @@ export const LogIn = () => {
         //   }),
         // });
         // const data = await res.json();
+        if (res.data.profile) {
+          router.push("/dashboard");
+        } else {
+          router.push("/profile");
+        }
       } catch (error) {
         toast.error("password buruu baina");
       }

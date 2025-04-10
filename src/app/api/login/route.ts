@@ -10,7 +10,7 @@ type user = {
 export async function POST(req: Request): Promise<NextResponse> {
   try {
     const { email, password } = await req.json();
-    const getUserQuery = `SELECT username, password, email, "profileId" FROM "User" WHERE email=$1;`;
+    const getUserQuery = `SELECT id,username, password, email, "profileId" FROM "User" WHERE email=$1 `;
     const values = [email];
 
     const users: user[] = await runQuery(getUserQuery, values);
@@ -25,16 +25,19 @@ export async function POST(req: Request): Promise<NextResponse> {
 
     if (!isValid) {
       return new NextResponse(JSON.stringify({ error: "password buruu bn" }), {
-        status: 404,
+        status: 400,
       });
     }
 
     // profile tai yu ugui yu gedgiin shalgaad true false utgaa butsaanaa
-
-if (users)
+    const haveProfile = users[0].profileId ? true : false;
 
     return new NextResponse(
-      JSON.stringify({ users, message: "amjilttai nevterlee", profile: true }),
+      JSON.stringify({
+        users,
+        message: "amjilttai nevterlee",
+        profile: haveProfile,
+      }),
       { status: 200 }
     );
   } catch (err) {

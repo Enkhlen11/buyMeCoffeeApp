@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   try {
     const { email, username, password } = await req.json();
 
-    const createTable = `INSERT INTO "public"."User" (email, username, password) VALUES ($1, $2, $3)`;
+    const createTable = `INSERT INTO "public"."User" (email, username, password) VALUES ($1, $2, $3) RETURNING *`;
 
     const users = await runQuery(createTable, [email, username, password]);
 

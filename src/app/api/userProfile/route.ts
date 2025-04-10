@@ -30,13 +30,10 @@ export async function POST(req: Request): Promise<Response> {
         message: "amjilttai uusgelee",
       })
     );
-    //end userprofile baival dashboardluu bhgv baival
   } catch (error) {
     console.log(error);
     return new NextResponse(
       JSON.stringify({ message: "aldaa garlaa userprofile post huselt " })
-    );  
+    );
   }
 }
-
-// insert bolon create table 2 iin yalgaag oilgoh n
