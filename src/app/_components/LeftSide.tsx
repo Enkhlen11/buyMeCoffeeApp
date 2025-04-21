@@ -3,7 +3,7 @@ import { ExternalLinkIcon } from "lucide-react";
 
 export default function LeftSide() {
   return (
-    <div className="w-[25%]  mt-[30px]">
+    <div className="w-[25%] h-screen  mt-[30px]">
       <div className="flex flex-col  gap-3 ml-[40px]">
         <Button
           variant={"outline"}
